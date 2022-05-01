@@ -1,0 +1,75 @@
+name: flutter_medic_application
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.0-134.5.beta <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^1.0.3
+  google_fonts: ^2.3.2
+  flutter_audio_waveforms: ^1.2.1+4
+  audioplayers: ^0.20.1
+  fl_chart: ^0.50.1
+  flutter_custom_tab_bar: ^1.1.9
+  contained_tab_bar_view: ^0.8.0
+  flutter_countdown_timer: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  flutter_gen_runner:
+
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+
+  uses-material-design: true
+
+  assets:
+    - assets/image/pic/
+    - assets/image/svg/
+    - assets/audio/
+    - assets/
+
+  fonts:
+    - family: Alegreya
+      fonts:
+        - asset: assets/font/Alegreya-Bold.ttf
+          weight: 700
+        - asset: assets/font/Alegreya-SemiBold.ttf
+          weight: 600
+#        - asset: asset/font/Alegreya-Meduim.ttf
+#          weight: 500
+        - asset: assets/font/Alegreya-Regular.ttf
+          weight: 400
+
+    - family: AlegreyaSans
+      fonts:
+        - asset: assets/font/AlegreyaSans-Bold.ttf
+          weight: 700
+        - asset: assets/font/AlegreyaSans-Medium.ttf
+          weight: 500
+        - asset: assets/font/AlegreyaSans-Regular.ttf
+          weight: 400
+#
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

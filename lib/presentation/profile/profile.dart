@@ -7,7 +7,7 @@ import 'package:flutter_medic_application/presentation/resources/color_manager.d
 import 'package:flutter_medic_application/presentation/resources/font_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/style_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/value_manager.dart';
-import 'package:flutter_medic_application/presentation/widget/chart.dart';
+import 'package:flutter_medic_application/presentation/widget/bar_chart.dart';
 import 'package:flutter_medic_application/presentation/widget/svg_loader.dart';
 
 class ProfileScreen extends StatefulWidget {

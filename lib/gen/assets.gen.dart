@@ -12,9 +12,6 @@ class $AssetsAudioGen {
 
   /// File path: assets/audio/dance_monkey.mp3
   String get danceMonkey => 'assets/audio/dance_monkey.mp3';
-
-  /// File path: assets/audio/waveform.mp3
-  String get waveform => 'assets/audio/waveform.mp3';
 }
 
 class $AssetsImageGen {
@@ -136,14 +133,35 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/Splash Logo.svg
   String get splashLogo => 'assets/image/svg/Splash Logo.svg';
 
+  /// File path: assets/image/svg/booster.svg
+  String get booster => 'assets/image/svg/booster.svg';
+
+  /// File path: assets/image/svg/cloud.svg
+  String get cloud => 'assets/image/svg/cloud.svg';
+
+  /// File path: assets/image/svg/journal.svg
+  String get journal => 'assets/image/svg/journal.svg';
+
   /// File path: assets/image/svg/logo_inactive.svg
   String get logoInactive => 'assets/image/svg/logo_inactive.svg';
+
+  /// File path: assets/image/svg/notes.svg
+  String get notes => 'assets/image/svg/notes.svg';
+
+  /// File path: assets/image/svg/plan.svg
+  String get plan => 'assets/image/svg/plan.svg';
 
   /// File path: assets/image/svg/sound_active.svg
   String get soundActive => 'assets/image/svg/sound_active.svg';
 
   /// File path: assets/image/svg/sound_inactive.svg
   String get soundInactive => 'assets/image/svg/sound_inactive.svg';
+
+  /// File path: assets/image/svg/trainer.svg
+  String get trainer => 'assets/image/svg/trainer.svg';
+
+  /// File path: assets/image/svg/trainer2.svg
+  String get trainer2 => 'assets/image/svg/trainer2.svg';
 
   /// File path: assets/image/svg/user_active.svg
   String get userActive => 'assets/image/svg/user_active.svg';

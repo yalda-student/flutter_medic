@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
 import 'package:flutter_medic_application/presentation/resources/color_manager.dart';
@@ -9,8 +11,29 @@ import 'package:flutter_medic_application/presentation/widget/appbar.dart';
 import 'package:flutter_medic_application/presentation/widget/button.dart';
 import 'package:flutter_medic_application/presentation/widget/svg_loader.dart';
 
-class MeditationScreen extends StatelessWidget {
+class MeditationScreen extends StatefulWidget {
   const MeditationScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MeditationScreen> createState() => _MeditationScreenState();
+}
+
+class _MeditationScreenState extends State<MeditationScreen> {
+  late CountdownTimerController controller;
+
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CountdownTimerController(endTime: endTime);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +58,15 @@ class MeditationScreen extends StatelessWidget {
                   fontSize: FontSize.s20),
               textAlign: TextAlign.center),
           SVGLoader(size: AppSize.s350, path: Assets.image.svg.ink),
-          Text(
-            '45:00',
-            style: getRegularStyle(
+          CountdownTimer(
+            endTime: endTime,
+            controller: controller,
+            textStyle: getRegularStyle(
                 fontFamily: FontFamily.alegreyaSans,
                 color: ColorManager.white,
                 fontSize: 38),
           ),
-          Button(text: 'Start Now', onPress: () {}),
+          Button(text: 'Start Now', onPress: () => controller.disposeTimer()),
           const SizedBox(height: AppSize.s28),
         ],
       ),

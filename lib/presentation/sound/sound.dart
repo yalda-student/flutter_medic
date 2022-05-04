@@ -27,6 +27,7 @@ class SoundScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.only(top: AppSize.s12, left: AppSize.s18),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                     image: Assets.image.pic.albumCover, fit: BoxFit.cover),
                 color: ColorManager.white),

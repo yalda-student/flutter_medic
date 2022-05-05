@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/presentation/resources/color_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/value_manager.dart';
 import 'package:flutter_medic_application/presentation/widget/svg_loader.dart';
-import 'package:flutter_medic_application/root/root.dart';
 
 class AppBottomNavigation extends StatelessWidget {
   final int selectedIndex;

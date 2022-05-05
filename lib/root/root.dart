@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/presentation/main/main_screen.dart';
 import 'package:flutter_medic_application/presentation/profile/profile.dart';
+import 'package:flutter_medic_application/presentation/sleep/sleep.dart';
 import 'package:flutter_medic_application/presentation/sound/sound.dart';
 import 'package:flutter_medic_application/presentation/widget/bottom_navigation.dart';
+import 'package:flutter_medic_application/presentation/widget/drawer.dart';
 
-const int mainIndex = 0;
-const int soundIndex = 1;
-const int profileIndex = 2;
 
 class RootScreen extends StatefulWidget {
   const RootScreen({Key? key}) : super(key: key);
@@ -16,40 +16,44 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> {
-  int selectedIndex = mainIndex;
   final List<int> _history = [];
 
   final GlobalKey<NavigatorState> _mainKey = GlobalKey();
   final GlobalKey<NavigatorState> _soundKey = GlobalKey();
   final GlobalKey<NavigatorState> _profileKey = GlobalKey();
+  final GlobalKey<NavigatorState> _sleepKey = GlobalKey();
 
- late final map = {
+  late final map = {
     mainIndex: _mainKey,
     soundIndex: _soundKey,
     profileIndex: _profileKey,
+    noIndex: _sleepKey,
   };
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: [
-            _navigator(_mainKey, mainIndex, const MainScreen()),
-            _navigator(_soundKey, soundIndex, const SoundScreen()),
-            _navigator(_profileKey, profileIndex, const ProfileScreen()),
-          ],
-        ),
-        bottomNavigationBar: AppBottomNavigation(
-          selectedIndex: selectedIndex,
-          onTap: (index) {
-            _history.remove(selectedIndex);
-            _history.add(selectedIndex);
-            selectedIndex = index;
-            setState(() {});
-          },
+      child: AppDrawer(
+        scaffold: Scaffold(
+          body: IndexedStack(
+            index: selectedIndex,
+            children: [
+              _navigator(_mainKey, mainIndex, const MainScreen()),
+              _navigator(_soundKey, soundIndex, const SoundScreen()),
+              _navigator(_profileKey, profileIndex, const ProfileScreen()),
+              _navigator(_sleepKey, noIndex, const SleepScreen()),
+            ],
+          ),
+          bottomNavigationBar: AppBottomNavigation(
+            selectedIndex: selectedIndex,
+            onTap: (index) {
+              _history.remove(selectedIndex);
+              _history.add(selectedIndex);
+              selectedIndex = index;
+              setState(() {});
+            },
+          ),
         ),
       ),
     );

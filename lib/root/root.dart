@@ -7,7 +7,6 @@ import 'package:flutter_medic_application/presentation/sound/sound.dart';
 import 'package:flutter_medic_application/presentation/widget/bottom_navigation.dart';
 import 'package:flutter_medic_application/presentation/widget/drawer.dart';
 
-
 class RootScreen extends StatefulWidget {
   const RootScreen({Key? key}) : super(key: key);
 

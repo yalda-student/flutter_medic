@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
 import 'package:flutter_medic_application/presentation/resources/color_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/font_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/style_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/value_manager.dart';
+import 'package:flutter_medic_application/presentation/signup/signup.dart';
 import 'package:flutter_medic_application/presentation/widget/button.dart';
 import 'package:flutter_medic_application/presentation/widget/signup_button.dart';
+import 'package:flutter_medic_application/root/root.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +57,46 @@ class LoginScreen extends StatelessWidget {
                           color: ColorManager.white.withOpacity(0.7),
                           fontSize: FontSize.s22),
                     ),
-                    TextFormField(
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration:
-                            const InputDecoration(hintText: 'Email Address'),
-                        style: getRegularStyle(
-                            fontFamily: FontFamily.alegreyaSans,
-                            color: ColorManager.white,
-                            fontSize: FontSize.s20)),
-                    TextFormField(
-                      obscureText: true,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: const InputDecoration(hintText: 'Password'),
-                      style: getRegularStyle(
-                          fontFamily: FontFamily.alegreyaSans,
-                          color: ColorManager.white,
-                          fontSize: FontSize.s20),
-                    ),
+                    Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            AppTextField(
+                                controller: _emailController,
+                                hint: 'Email Address'),
+                            const SizedBox(height: AppSize.s20),
+                            TextFormField(
+                              obscureText: true,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration:
+                                  const InputDecoration(hintText: 'Password'),
+                              style: getRegularStyle(
+                                  fontFamily: FontFamily.alegreyaSans,
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s20),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter your password.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        )),
                     const SizedBox(height: AppSize.s20),
-                    Center(child: Button(text: 'LOGIN', onPress: () {})),
-                    const Center(child: SignUpButton()),
+                    Center(
+                        child: Button(
+                            text: 'LOGIN',
+                            onPress: () {
+                              login(context);
+                            })),
+                    Center(
+                        child: SignUpButton(
+                      action: 'Sign Up',
+                      textButton: "Don't have an account? ",
+                      nextScreen: SingUpScreen(),
+                    )),
                   ],
                 ),
               ),
@@ -79,5 +105,33 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void login(BuildContext context) async {
+    var validate = _formKey.currentState!.validate();
+    if (validate) {
+      var isAuthorized = await authorization(context);
+      if (isAuthorized) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const RootScreen()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('This user does not exist.')));
+      }
+    }
+  }
+
+  authorization(BuildContext context) async {
+    final pref = await SharedPreferences.getInstance();
+    final email = pref.getString(savedEmail);
+    final password = pref.getString(savedPassword);
+
+    if (email == null || password == null) {
+      return false;
+    } else if (email != _emailController.text ||
+        password != _passwordController.text) {
+      return false;
+    }
+    return true;
   }
 }

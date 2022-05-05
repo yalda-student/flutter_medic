@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_medic_application/presentation/resources/theme_manager.dart';
-import 'package:flutter_medic_application/presentation/sleep/sleep.dart';
-import 'package:flutter_medic_application/root/root.dart';
+import 'package:flutter_medic_application/presentation/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Medic',
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
-      home: const RootScreen(),
+      home: const SplashScreen(),
     );
   }
 }

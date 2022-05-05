@@ -28,6 +28,7 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   pausable_timer: ^1.0.0+4
   flutter_advanced_drawer: ^1.3.2
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
@@ -14,6 +12,7 @@ import 'package:flutter_medic_application/presentation/widget/button.dart';
 import 'package:flutter_medic_application/presentation/widget/drawer.dart';
 import 'package:flutter_medic_application/presentation/widget/svg_loader.dart';
 import 'package:flutter_medic_application/root/root.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 
 class MeditationScreen extends StatefulWidget {
   const MeditationScreen({Key? key}) : super(key: key);
@@ -23,19 +22,34 @@ class MeditationScreen extends StatefulWidget {
 }
 
 class _MeditationScreenState extends State<MeditationScreen> {
-  late CountdownTimerController controller;
+  bool isPaused = true;
+  String start = 'Start Now';
+  String stop = 'Stop It';
+  String timerText = '45:00';
+  int countDown = 45 * 60;
 
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+  late PausableTimer timer;
+  late ValueNotifier<String> _counter;
 
   @override
   void initState() {
     super.initState();
-    controller = CountdownTimerController(endTime: endTime);
+    _counter = ValueNotifier<String>(formatTime(countDown));
+
+    timer = PausableTimer(const Duration(seconds: 1), () {
+      countDown--;
+
+      if (countDown > 0) {
+        timer
+          ..reset()
+          ..start();
+      }
+      _counter.value = formatTime(countDown);
+    });
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -65,15 +79,25 @@ class _MeditationScreenState extends State<MeditationScreen> {
                     fontSize: FontSize.s20),
                 textAlign: TextAlign.center),
             SVGLoader(size: AppSize.s350, path: Assets.image.svg.ink),
-            CountdownTimer(
-              endTime: endTime,
-              controller: controller,
-              textStyle: getRegularStyle(
-                  fontFamily: FontFamily.alegreyaSans,
-                  color: ColorManager.white,
-                  fontSize: 38),
-            ),
-            Button(text: 'Start Now', onPress: () => controller.disposeTimer()),
+            ValueListenableBuilder<String>(
+                valueListenable: _counter,
+                builder: (context, value, child) {
+                  debugPrint(value);
+                  return Text(value,
+                      style: getRegularStyle(
+                          fontFamily: FontFamily.alegreyaSans,
+                          color: ColorManager.white,
+                          fontSize: 38));
+                }),
+            const SizedBox(height: AppSize.s28),
+            Button(
+                text: isPaused ? start : stop,
+                onPress: () {
+                  isPaused ? timer.start() : timer.pause();
+                  setState(() {
+                    isPaused = !isPaused;
+                  });
+                }),
             const SizedBox(height: AppSize.s28),
           ],
         ),
@@ -90,5 +114,9 @@ class _MeditationScreenState extends State<MeditationScreen> {
         ),
       ),
     );
+  }
+
+  String formatTime(int seconds) {
+    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
   }
 }

@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
+import 'package:flutter_medic_application/presentation/login/login.dart';
 import 'package:flutter_medic_application/presentation/resources/color_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/font_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/style_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/value_manager.dart';
 import 'package:flutter_medic_application/presentation/widget/button.dart';
+import 'package:flutter_medic_application/presentation/widget/signup_button.dart';
+import 'package:flutter_medic_application/root/root.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SingUpScreen extends StatelessWidget {
-  const SingUpScreen({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  SingUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,37 +58,46 @@ class SingUpScreen extends StatelessWidget {
                           color: ColorManager.white.withOpacity(0.7),
                           fontSize: FontSize.s22),
                     ),
-                    TextFormField(
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        decoration:
-                            const InputDecoration(hintText: 'Name'),
-                        style: getRegularStyle(
-                            fontFamily: FontFamily.alegreyaSans,
-                            color: ColorManager.white,
-                            fontSize: FontSize.s20)),
-                    TextFormField(
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration:
-                            const InputDecoration(hintText: 'Email Address'),
-                        style: getRegularStyle(
-                            fontFamily: FontFamily.alegreyaSans,
-                            color: ColorManager.white,
-                            fontSize: FontSize.s20)),
-                    TextFormField(
-                      obscureText: true,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: const InputDecoration(hintText: 'Password'),
-                      style: getRegularStyle(
-                          fontFamily: FontFamily.alegreyaSans,
-                          color: ColorManager.white,
-                          fontSize: FontSize.s20),
-                    ),
+                    Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            AppTextField(
+                                controller: _nameController, hint: 'Name'),
+                            const SizedBox(height: AppSize.s20),
+                            AppTextField(
+                                controller: _emailController,
+                                hint: 'Email Address'),
+                            const SizedBox(height: AppSize.s20),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration:
+                                  const InputDecoration(hintText: 'Password'),
+                              style: getRegularStyle(
+                                  fontFamily: FontFamily.alegreyaSans,
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s20),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter your password.';
+                                }
+                                return null;
+                              },
+                            )
+                          ],
+                        )),
                     const SizedBox(height: AppSize.s20),
-                    Center(child: Button(text: 'SUGNUP', onPress: () {})),
-                    // const Center(child: SignUpButton()),
+                    Center(
+                        child: Button(
+                            text: 'SIGNUP', onPress: () => signUp(context))),
+                    Center(
+                        child: SignUpButton(
+                            action: 'Sign In',
+                            textButton: "Already have an account? ",
+                            nextScreen: LoginScreen())),
                   ],
                 ),
               ),
@@ -86,6 +105,64 @@ class SingUpScreen extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  void signUp(BuildContext context) {
+    var validate = _formKey.currentState!.validate();
+    if (validate) {
+      saveUser();
+      fetchUserData();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const RootScreen()));
+    }
+  }
+
+  void saveUser() async {
+    final pref = await SharedPreferences.getInstance();
+
+    String name = _nameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    pref.setString(savedName, name);
+    debugPrint('name: $name');
+    pref.setString(savedEmail, email);
+    debugPrint('name: $name');
+    pref.setString(savedPassword, password);
+    debugPrint('name: $name');
+  }
+}
+
+class AppTextField extends StatelessWidget {
+  final String hint;
+  final TextEditingController controller;
+
+  const AppTextField({Key? key, required this.controller, required this.hint})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      textInputAction: TextInputAction.next,
+      keyboardType: hint == 'Email Address'
+          ? TextInputType.emailAddress
+          : TextInputType.text,
+      decoration: InputDecoration(hintText: hint),
+      style: getRegularStyle(
+          fontFamily: FontFamily.alegreyaSans,
+          color: ColorManager.white,
+          fontSize: FontSize.s20),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Fill the box.';
+        }
+        if (hint == 'Email Address' && !value.contains('@')) {
+          return 'Enter valid email address.';
+        }
+        return null;
+      },
     );
   }
 }

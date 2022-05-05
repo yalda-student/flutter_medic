@@ -6,12 +6,13 @@ import 'package:flutter_medic_application/presentation/resources/color_manager.d
 import 'package:flutter_medic_application/presentation/resources/font_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/style_manager.dart';
 import 'package:flutter_medic_application/presentation/resources/value_manager.dart';
+import 'package:flutter_medic_application/presentation/signup/signup.dart';
 import 'package:flutter_medic_application/presentation/widget/button.dart';
 import 'package:flutter_medic_application/presentation/widget/signup_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OnBoradScreen extends StatelessWidget {
-  const OnBoradScreen({Key? key}) : super(key: key);
+class OnBoardScreen extends StatelessWidget {
+  const OnBoardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,10 @@ class OnBoradScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                  width: AppSize.s350,
-                  height: AppSize.s350,
+                  width: 200,
+                  height: 200,
                   child: SvgPicture.asset(Assets.image.svg.logo)),
+              const SizedBox(height: AppSize.s35),
               Text(
                 'WELCOME',
                 style: getBoldStyle(
@@ -52,11 +54,14 @@ class OnBoradScreen extends StatelessWidget {
                   text: 'Login With Email',
                   onPress: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+                      builder: (context) =>  LoginScreen(),
                     ));
                   }),
               const SizedBox(height: AppSize.s20),
-              const SignUpButton(),
+               SignUpButton(
+                  action: 'Sign Up',
+                  textButton: "Don't have an account? ",
+                  nextScreen: SingUpScreen()),
               const SizedBox(height: AppSize.s28),
             ],
           ),

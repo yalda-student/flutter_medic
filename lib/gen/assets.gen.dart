@@ -28,6 +28,9 @@ class $AssetsImagePicGen {
   AssetGenImage get anxious =>
       const AssetGenImage('assets/image/pic/Anxious.png');
 
+  /// File path: assets/image/pic/Calm.png
+  AssetGenImage get calm => const AssetGenImage('assets/image/pic/Calm.png');
+
   /// File path: assets/image/pic/Hamburger.png
   AssetGenImage get hamburger =>
       const AssetGenImage('assets/image/pic/Hamburger.png');
@@ -42,6 +45,9 @@ class $AssetsImagePicGen {
 
   /// File path: assets/image/pic/Logo-1.png
   AssetGenImage get logo1 => const AssetGenImage('assets/image/pic/Logo-1.png');
+
+  /// File path: assets/image/pic/Relax.png
+  AssetGenImage get relax => const AssetGenImage('assets/image/pic/Relax.png');
 
   /// File path: assets/image/pic/Sound_active.png
   AssetGenImage get soundActive =>
@@ -70,6 +76,9 @@ class $AssetsImagePicGen {
   /// File path: assets/image/pic/desert.png
   AssetGenImage get desert =>
       const AssetGenImage('assets/image/pic/desert.png');
+
+  /// File path: assets/image/pic/focus.png
+  AssetGenImage get focus => const AssetGenImage('assets/image/pic/focus.png');
 
   /// File path: assets/image/pic/forest.png
   AssetGenImage get forest =>

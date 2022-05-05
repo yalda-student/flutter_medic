@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tab_bar/library.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
 import 'package:flutter_medic_application/presentation/resources/color_manager.dart';
@@ -31,17 +32,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Assets.image.pic.profile.image(width: 240, height: 210),
         ),
         Text(
-          'Yalda Student',
+          name,
           style: getMeduimStyle(
               fontFamily: FontFamily.alegreya,
               color: ColorManager.white,
               fontSize: FontSize.s34),
         ),
+        const SizedBox(height: AppSize.s20),
         Text('Fars, Iran',
             style: getRegularStyle(
                 fontFamily: FontFamily.alegreyaSans,
                 color: ColorManager.white,
                 fontSize: FontSize.s20)),
+        const SizedBox(height: AppSize.s20),
         Expanded(
           child: ContainedTabBarView(
             initialIndex: 0,

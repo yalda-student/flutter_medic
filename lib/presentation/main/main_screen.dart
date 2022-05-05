@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_medic_application/data/const.dart';
 import 'package:flutter_medic_application/data/feelings.dart';
 import 'package:flutter_medic_application/gen/assets.gen.dart';
 import 'package:flutter_medic_application/gen/fonts.gen.dart';
@@ -22,7 +23,7 @@ class MainScreen extends StatelessWidget {
           const CustomAppBar(),
           const SizedBox(height: AppSize.s20),
           Text(
-            'Welcome back, yalda!',
+            'Welcome back, $name!',
             style: getMeduimStyle(
                 fontFamily: FontFamily.alegreya,
                 color: ColorManager.white,
@@ -83,8 +84,7 @@ class _FeelingItem extends StatelessWidget {
           height: 65,
           padding: const EdgeInsets.all(AppSize.s8),
           decoration: BoxDecoration(
-              // color: ColorManager.white,
-              // backgroundBlendMode: BlendMode.plus,
+              color: ColorManager.white,
               borderRadius: BorderRadius.circular(AppSize.s20)),
           child: image,
         ),

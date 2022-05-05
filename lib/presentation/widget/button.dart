@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final String text;
-  final Function onPress;
+  final Function() onPress;
 
   const Button({Key? key, required this.text, required this.onPress})
       : super(key: key);
@@ -10,7 +10,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => onPress,
+      onPressed:  onPress,
       child: Text(text, style: const TextStyle(letterSpacing: 1.5)),
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(321, 61),
